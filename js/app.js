@@ -50,3 +50,28 @@ const teamMembers = [
     img: "img/female3.png",
   },
 ];
+
+//DOM reference
+const teamListEl = document.querySelector(".team-list");
+
+//Cards rendering
+teamMembers.forEach((member) => {
+  const { img, name, role, email } = member;
+
+  const card = `<li class="col container mx-2 p-4">
+      <div class="d-flex flex-column text-center bg-success rounded">
+        <img
+          class="img-fluid w-10 rounded-pill float-start m-3"
+          src="../${img}"
+          alt="A Picture of ${name} ${role}"
+        />
+        <h2 class="text-light">${name}</h2>
+        <p class="text-light">${role}</p>
+        <p class="text-light text-decoration-underline">
+          ${email}
+        </p>
+      </div>
+    </li>`;
+
+  teamListEl.innerHTML += card;
+});
