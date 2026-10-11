@@ -1,1 +1,1 @@
-Local Storage e Spread Operator
+Local Storage
