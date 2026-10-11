@@ -6,7 +6,20 @@ header {
 
 body {
   background-color: white;
-  p:first-child {
+  section:first-child {
+    color: white;
+  }
+  p:first-child,
+  section {
     color: black;
+  }
+  label {
+    color: black;
+  }
+  button,
+  input {
+    color: black;
+    background-color: white;
+    border: grey 2px solid;
   }
 }

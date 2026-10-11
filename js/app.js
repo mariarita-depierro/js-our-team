@@ -53,11 +53,35 @@ const teamMembers = [
 
 //DOM reference
 const teamListEl = document.querySelector(".team-list");
+const teamFormEl = document.querySelector(".team-form");
+const inputImageEl = document.getElementById("image");
+const inputNameEl = document.getElementById("name");
+const inputRoleEl = document.getElementById("role");
+const inputEmailEl = document.getElementById("email");
 
 //Cards rendering
 teamMembers.forEach((member) => {
   const { img, name, role, email } = member;
 
+  addNewMember(img, name, role, email);
+});
+
+//Add new team member
+teamFormEl.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const image = inputImageEl.value.trim();
+  const name = inputNameEl.value.trim();
+  const role = inputRoleEl.value.trim();
+  const email = inputEmailEl.value.trim();
+
+  addNewMember(image, name, role, email);
+
+  teamFormEl.reset();
+  inputImageEl.focus();
+});
+
+//Helper Function for add new member
+function addNewMember(img, name, role, email) {
   const card = `<li class="col container mx-2 p-4">
       <div class="d-flex flex-column text-center bg-success rounded">
         <img
@@ -74,4 +98,4 @@ teamMembers.forEach((member) => {
     </li>`;
 
   teamListEl.innerHTML += card;
-});
+}
