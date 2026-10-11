@@ -1,9 +1,7 @@
 /* esercizio di oggi: Our Team
 
-
 - Dato un array di oggetti rappresentante un team di un’azienda,
 creare una pagina dedicata in cui mostrare una card per ciascun membro del team.
-
 
 - Aggiungere un form di aggiunta membri che permetta di visualizzare il nuovo membro sulla pagina (usate una foto qualunque, anche vostra se volete sentirvi parte del team! 😀)
 
@@ -12,7 +10,7 @@ creare una pagina dedicata in cui mostrare una card per ciascun membro del team.
 - Rendere l’esercizio responsive, fruibile sia da mobile che da desktop.
  */
 
-const teamMembers = [
+let teamMembers = [
   {
     name: "Marco Bianchi",
     role: "Designer",
@@ -59,11 +57,18 @@ const inputNameEl = document.getElementById("name");
 const inputRoleEl = document.getElementById("role");
 const inputEmailEl = document.getElementById("email");
 
-//Cards rendering
+//Lettura e verifica dati nel localstorage
+const localTeamMembers = JSON.parse(localStorage.getItem("team-members"));
+
+if (localTeamMembers !== null) {
+  teamMembers = localTeamMembers;
+}
+
+//-------- Cards rendering ----------
 teamMembers.forEach((member) => {
   const { img, name, role, email } = member;
 
-  addNewMember(img, name, role, email);
+  addCard(img, name, role, email);
 });
 
 //Add new team member
@@ -74,24 +79,44 @@ teamFormEl.addEventListener("submit", (e) => {
   const role = inputRoleEl.value.trim();
   const email = inputEmailEl.value.trim();
 
-  addNewMember(image, name, role, email);
+  addCard(image, name, role, email);
 
   teamFormEl.reset();
   inputImageEl.focus();
+
+  //Aggiornamento struttura dati con il nuovo membro
+  const newMember = {
+    name,
+    role,
+    email,
+    img: image,
+  };
+
+  teamMembers.push(newMember);
+
+  //Salvataggio dati in maniera persistente
+  localStorage.setItem("team-members", JSON.stringify(teamMembers));
 });
 
-//Helper Function for add new member
-function addNewMember(img, name, role, email) {
+//-------------- Helper Functions ---------
+/**
+ * Gen a new card and add it to the list item
+ * @param {string} img The image's member
+ * @param {string} name The name's member
+ * @param {string} role The role's member
+ * @param {string} email The email's member
+ */
+function addCard(img, name, role, email) {
   const card = `<li class="col container mx-2 p-4">
       <div class="d-flex flex-column text-center bg-success rounded">
         <img
-          class="img-fluid w-10 rounded-pill float-start m-3"
+          class="img-fluid w-10 rounded-pill align-self-center m-3"
           src="../${img}"
           alt="A Picture of ${name} ${role}"
         />
         <h2 class="text-light">${name}</h2>
         <p class="text-light">${role}</p>
-        <p class="text-light text-decoration-underline">
+        <p class="text-light text-decoration-underline p-2">
           ${email}
         </p>
       </div>
